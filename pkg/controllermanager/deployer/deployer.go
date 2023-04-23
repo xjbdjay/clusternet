@@ -1002,7 +1002,7 @@ func (deployer *Deployer) handleHelmChart(chart *appsapi.HelmChart) error {
 	chartPhase = appsapi.HelmChartFound
 	if registry.IsOCI(chart.Spec.Repository) {
 		var found bool
-		found, err = utils.FindOCIChart(chart.Spec.Repository, chart.Spec.Chart, chart.Spec.ChartVersion)
+		found, err = utils.FindOCIChart(chart.Spec.Repository, username, password, chart.Spec.Chart, chart.Spec.ChartVersion)
 		if !found {
 			chartPhase = appsapi.HelmChartNotFound
 			reason = fmt.Sprintf("not found a version matched %s for chart %s/%s", chart.Spec.ChartVersion, chart.Spec.Repository, chart.Spec.Chart)

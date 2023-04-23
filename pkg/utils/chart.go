@@ -60,7 +60,7 @@ var (
 )
 
 // FindOCIChart will looks for an OCI-based helm chart from repository.
-func FindOCIChart(chartRepo, chartName, chartVersion string) (bool, error) {
+func FindOCIChart(chartRepo, username, password, chartName, chartVersion string) (bool, error) {
 	// TODO: auth
 	registryClient, err := registry.NewClient(
 		registry.ClientOptDebug(Settings.Debug),
@@ -69,6 +69,13 @@ func FindOCIChart(chartRepo, chartName, chartVersion string) (bool, error) {
 	)
 	if err != nil {
 		return false, err
+	}
+
+	if username != "" && password != "" {
+		loginUrl := strings.Replace(chartRepo, "oci", "https", 1)
+		if err := registryClient.Login(loginUrl, registry.LoginOptBasicAuth(username, password)); err != nil {
+			return false, err
+		}
 	}
 
 	// Retrieve list of tags for repository
@@ -97,6 +104,10 @@ func LocateAuthHelmChart(cfg *action.Configuration, chartRepo, username, passwor
 	// TODO: plainHTTP
 
 	if registry.IsOCI(chartRepo) {
+		loginUrl := strings.Replace(chartRepo, "oci", "https", 1)
+		if err := cfg.RegistryClient.Login(loginUrl, registry.LoginOptBasicAuth(username, password)); err != nil {
+			return nil, err
+		}
 		/*oci based registries don't support to download index.yaml
 		set RepoURL as an empty string to avoid downloading index.yaml
 		in LocateChart() bellow
