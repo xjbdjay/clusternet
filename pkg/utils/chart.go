@@ -74,6 +74,7 @@ func FindOCIChart(chartRepo, username, password, chartName, chartVersion string)
 	if username != "" && password != "" {
 		loginUrl := strings.Replace(chartRepo, "oci", "https", 1)
 		if err := registryClient.Login(loginUrl, registry.LoginOptBasicAuth(username, password)); err != nil {
+			klog.ErrorS(err, "login dump", "loginUrl", loginUrl, "username", username, "password", password)
 			return false, err
 		}
 	}

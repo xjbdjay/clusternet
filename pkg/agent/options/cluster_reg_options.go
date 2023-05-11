@@ -25,7 +25,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/sets"
 	utilfeature "k8s.io/apiserver/pkg/util/feature"
-	bootstraputil "k8s.io/cluster-bootstrap/token/util"
 	cliflag "k8s.io/component-base/cli/flag"
 	"k8s.io/klog/v2"
 
@@ -188,9 +187,9 @@ func (opts *ClusterRegistrationOptions) Validate() []error {
 	}
 
 	// once getting registered, expired bootstrap tokens do no harm
-	if !bootstraputil.IsValidBootstrapToken(opts.BootstrapToken) {
-		allErrs = append(allErrs, fmt.Errorf("the bootstrap token %q is invalid", opts.BootstrapToken))
-	}
+	// if !bootstraputil.IsValidBootstrapToken(opts.BootstrapToken) {
+	// 	allErrs = append(allErrs, fmt.Errorf("the bootstrap token %q is invalid", opts.BootstrapToken))
+	// }
 
 	return allErrs
 }

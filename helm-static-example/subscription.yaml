@@ -1,0 +1,37 @@
+apiVersion: apps.clusternet.io/v1alpha1
+kind: Subscription
+metadata:
+  name: test-helm
+  namespace: default
+spec:
+  subscribers: # defines the clusters to be distributed to
+    - clusterAffinity:
+        matchLabels:
+          clusters.clusternet.io/cluster-id: 09b9c656-bde1-4627-b9a2-65c6550c0556 # PLEASE UPDATE THIS CLUSTER-ID TO YOURS!!!
+      weight: 1 # Deployment abc/my-nginx will have 2 replicas running in this cluster
+  schedulingStrategy: Dividing
+  dividingScheduling:
+    type: Static
+  feeds: # defines all the resources to be deployed with
+    - apiVersion: v1
+      kind: Namespace
+      name: xxx
+    - apiVersion: apps.clusternet.io/v1alpha1
+      kind: HelmChart
+      name: meta
+      namespace: default
+
+---
+apiVersion: apps.clusternet.io/v1alpha1
+kind: HelmChart
+metadata:
+  name: meta
+  namespace: default
+spec:
+  repo: oci://635304352795.dkr.ecr.cn-north-1.amazonaws.com.cn
+  chart: metadata
+  version: 0.1.0
+  targetNamespace: xxx
+  chartPullSecret:
+    name: ecr
+    namespace: default

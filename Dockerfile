@@ -8,6 +8,7 @@ FROM --platform=$BUILDPLATFORM golang:${GOVERSION} as builder
 # Copy in the go src
 WORKDIR /go/src/github.com/clusternet/clusternet
 COPY pkg pkg/
+COPY vendor vendor/
 COPY cmd cmd/
 COPY go.mod go.mod
 COPY go.sum go.sum

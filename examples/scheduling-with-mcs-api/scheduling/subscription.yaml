@@ -7,12 +7,8 @@ spec:
   subscribers: # defines the clusters to be distributed to
     - clusterAffinity:
         matchLabels:
-          clusters.clusternet.io/cluster-id: dc91021d-2361-4f6d-a404-7c33b9e01118 # PLEASE UPDATE THIS CLUSTER-ID TO YOURS!!!
+          clusters.clusternet.io/cluster-id: 09b9c656-bde1-4627-b9a2-65c6550c0556
       weight: 1 # Deployment bar/my-nginx will have 2 replicas running in this cluster
-    - clusterAffinity:
-        matchLabels:
-          clusters.clusternet.io/cluster-id: 5f9da921-0437-4fea-a89d-42aa1ede9b25 # PLEASE UPDATE THIS CLUSTER-ID TO YOURS!!!
-      weight: 2 # Deployment bar/my-nginx will have 4 replicas running in this cluster
   schedulingStrategy: Dividing
   dividingScheduling:
     type: Static

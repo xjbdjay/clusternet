@@ -1,10 +1,13 @@
 apiVersion: apps.clusternet.io/v1alpha1
 kind: HelmChart
 metadata:
-  name: mysql
+  name: meta
   namespace: default
 spec:
-  repo: oci://myoci.registry.com:5000/helm-charts
-  chart: mysql
-  version: 9.2.0
-  targetNamespace: abc
+  repo: oci://635304352795.dkr.ecr.cn-north-1.amazonaws.com.cn
+  chart: metadata
+  version: 0.1.0
+  targetNamespace: xxx
+  chartPullSecret:
+    name: ecr
+    namespace: default

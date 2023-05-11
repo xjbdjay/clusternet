@@ -4,7 +4,12 @@ metadata:
   name: mysql # this name will be used as Helm release name as well
   namespace: default
 spec:
-  repo: https://charts.bitnami.com/bitnami
-  chart: mysql
-  version: 9.2.0
+  repo: oci://635304352795.dkr.ecr.cn-north-1.amazonaws.com.cn
+  chart: account-resources
+  version: 0.1.0
   targetNamespace: abc
+  wait: true
+  waitForJob: true
+  chartPullSecret:
+    name: ecr
+    namespace: default
